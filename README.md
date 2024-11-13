@@ -14,4 +14,4 @@ The backend is built using the Spring framework with Gradle as the build tool, f
 - **Recipe Processing**: Recipes are parsed from a provided URL using the Spoonacular API. If a recipe is successfully parsed and not found as an existing recipe, it is saved to the SQLite database. 
 
 ## Database
-The application uses a SQLite database for lightweight, local data storage. 
+The application uses SQLite as the database engine. 
