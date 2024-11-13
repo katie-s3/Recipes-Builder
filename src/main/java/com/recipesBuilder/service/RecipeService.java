@@ -1,9 +1,8 @@
-//logic for processing recipes
 package com.recipesBuilder.service;
 
+import com.recipesBuilder.controller.RecipeController;
 import com.recipesBuilder.model.Recipe;
 import com.recipesBuilder.parser.RecipeParser;
-import com.recipesBuilder.repository.RecipeRepository;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ public class RecipeService {
     }
 
     public void saveRecipe(Recipe recipe) throws SQLException {
-        RecipeRepository repo = new RecipeRepository();
+        RecipeController repo = new RecipeController();
 
         Boolean created = repo.createTable();
         if (created) {
@@ -26,7 +25,7 @@ public class RecipeService {
     }
 
     public List<Recipe> findRecipe() throws SQLException {
-        RecipeRepository repo = new RecipeRepository();
+        RecipeController repo = new RecipeController();
 
         return repo.fetchRecipes();
     }

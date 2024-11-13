@@ -1,14 +1,15 @@
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import '../styles.css';
 
 
-export default function RecipeCard() {
+export default function RecipeCard({ recipe, onClick}) {
+  
   return (
     <Card 
-      style={{ width: '18rem', margin: "4rem", boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}
+      style={{ width: '20rem', margin: "4rem", boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', cursor:'pointer' }}
       border="dark"
+      onClick={onClick}
     >
       <div className="d-flex justify-content-center">
         <Card.Img 
@@ -25,10 +26,10 @@ export default function RecipeCard() {
       </div>
       
       <Card.Footer>
-        <Card.Title><h3>Recipe Title</h3></Card.Title>
-        <Card.Text> # Ingredients | Total Time</Card.Text>
+        <Card.Title><h4>{ recipe.title }</h4></Card.Title>
+        <Card.Text> { recipe.ingredients.length } Ingredients | { recipe.time } Minutes</Card.Text>
       </Card.Footer>
     </Card>
-  );
+  )
 }
-
+  

@@ -3,10 +3,12 @@ import './App.css';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 
 import Home from './pages/homePage';
+import RecipeDetails from './pages/recipeDetails';
 
 const AppRoutes = () => {
   const routes = useRoutes([
-    { path: '/', element: <Home />}
+    { path: '/', element: <Home />},
+    { path: '/details/:title', element: <RecipeDetails />}
   ]); 
 
   return routes;

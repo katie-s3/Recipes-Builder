@@ -4,30 +4,18 @@ package com.recipesBuilder.parser;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import com.recipesBuilder.model.Recipe;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import java.net.http.HttpClient;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.client.CloseableHttpClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-
-import static java.nio.file.StandardOpenOption.APPEND;
 
 public class RecipeParser {
 
@@ -42,7 +30,8 @@ public class RecipeParser {
         Recipe recipe = new Recipe(
                 "Recipe Not Found",
                 new ArrayList<String>(),
-                ""
+                " ",
+                0
         );
 
 
@@ -62,10 +51,13 @@ public class RecipeParser {
             JsonNode jsonResponse = objectMapper.readTree(response.body());
 
             String title = jsonResponse.get("title").asText();
+            String unformattedInstructions = jsonResponse.get("instructions").asText();
             String instructions = jsonResponse.get("instructions").asText();
-            JsonNode extendedIngredients = jsonResponse.get("extendedIngredients");
 
-            List<String> ingredients = new ArrayList<String>();
+            int time = jsonResponse.get("readyInMinutes").asInt();
+
+            JsonNode extendedIngredients = jsonResponse.get("extendedIngredients");
+            List<String> ingredients = new ArrayList<>();
             for (JsonNode ingredient : extendedIngredients) {
                 String original = ingredient.get("original").asText();
                 ingredients.add(original);
@@ -74,6 +66,7 @@ public class RecipeParser {
             recipe.setTitle(title);
             recipe.setIngredients(ingredients);
             recipe.setInstructions(instructions);
+            recipe.setTime(time);
         }
         else {
             System.out.println(response.body());
